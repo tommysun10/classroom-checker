@@ -1,21 +1,21 @@
-const fullData = require('./full.json');
+const summer2 = require("./201960.json");
+const summerfull = require("./201950.json");
 
+// fall: "10",
+// spring: "30",
+// summer1: "40",
+// summer2: "60",
+// summerfull: "50"
+
+////////////////////////////////////////////
 // const room = "Snell Library 031";
-const room = "Snell Library 033"
+const room = "Snell Library 033";
+////////////////////////////////////////////
 
-// Simplifies data to only active classes that are not online
+const sectionMap = summerfull["sectionMap"];
+// const sectionMap = summer2["sectionMap"];
 
-const classes = {}
-
-const sectionMap = fullData["sectionMap"];
-
-Object.keys(sectionMap).forEach(function(key) {
-    if (!sectionMap[key]["online"]) {
-        classes[key] = sectionMap[key]
-    }
-})
-
-// Returns crns and latest class times
+const classes = {};
 
 const crns = [];
 
@@ -28,27 +28,57 @@ const latestTime = {
   "4": 0
 };
 
-// Gets the classes from the given room
-Object.keys(classes).forEach(function(key) {
-  classes[key]["meetings"].map(function(obj) {
-    if (obj["where"] === room) {
-      crns.push(classes[key]["crn"]);
-      classTimes[key] = obj
+// Simplifies data to only active classes that are not online
+function simplifyData() {
+  Object.keys(sectionMap).forEach(function(key) {
+    if (!sectionMap[key]["online"]) {
+      classes[key] = sectionMap[key];
     }
   });
-});
+}
 
-// Gets the ending time of the last class in that room
-Object.keys(classTimes).forEach(function(key) {
+// Returns crns and latest class times
+function getClasses() {
+  // Gets the classes from the given room
+  Object.keys(classes).forEach(function(key) {
+    classes[key]["meetings"].map(function(obj) {
+      if (obj["where"] === room) {
+        crns.push(classes[key]["crn"]);
+        classTimes[key] = obj;
+      }
+    });
+  });
+}
+
+function getEndTimes() {
+  // Gets the ending time of the last class in that room
+  Object.keys(classTimes).forEach(function(key) {
     Object.keys(classTimes[key]["times"]).forEach(function(day) {
-        latestTime[day] = Math.max(latestTime[day], classTimes[key]["times"][day][0]["end"])
-    })
-})
+      latestTime[day] = Math.max(
+        latestTime[day],
+        classTimes[key]["times"][day][0]["end"]
+      );
+    });
+  });
+}
 
-// Converts seconds to hour
-Object.keys(latestTime).forEach(function(day) {
-    latestTime[day] = new Date(latestTime[day] * 1000).toISOString().substr(11, 8);
-})
+function convertToSeconds() {
+  // Converts seconds to hour
+  Object.keys(latestTime).forEach(function(day) {
+    latestTime[day] = new Date(latestTime[day] * 1000)
+      .toISOString()
+      .substr(11, 8);
+  });
+}
+
+function doAll() {
+  simplifyData();
+  getClasses();
+  getEndTimes();
+  convertToSeconds();
+}
+
+doAll();
 
 // Show crns and times
 console.log("crns: " + crns);
