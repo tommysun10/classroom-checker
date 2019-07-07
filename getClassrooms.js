@@ -9,11 +9,8 @@ const summerfull = require("./201950.json");
 
 ////////////////////////////////////////////
 // const room = "Snell Library 031";
-const room = "Snell Library 033";
+const room = "Snell Library 031";
 ////////////////////////////////////////////
-
-const sectionMap = summerfull["sectionMap"];
-// const sectionMap = summer2["sectionMap"];
 
 const classes = {};
 
@@ -29,10 +26,11 @@ const latestTime = {
 };
 
 // Simplifies data to only active classes that are not online
-function simplifyData() {
-  Object.keys(sectionMap).forEach(function(key) {
-    if (!sectionMap[key]["online"]) {
-      classes[key] = sectionMap[key];
+function simplifyData(semester) {
+  const simplify = semester["sectionMap"];
+  Object.keys(simplify).forEach(function(key) {
+    if (!simplify[key]["online"]) {
+      classes[key] = simplify[key];
     }
   });
 }
@@ -72,9 +70,14 @@ function convertToSeconds() {
 }
 
 function doAll() {
-  simplifyData();
+  simplifyData(summer2);
   getClasses();
   getEndTimes();
+
+  simplifyData(summerfull);
+  getClasses();
+  getEndTimes();
+
   convertToSeconds();
 }
 
