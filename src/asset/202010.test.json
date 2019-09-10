@@ -1,0 +1,53 @@
+{
+    "sectionMap": {
+    "neu.edu/202010/ACCT/1201/10548": {
+        "seatsCapacity": 40,
+        "seatsRemaining": 0,
+        "waitCapacity": 0,
+        "waitRemaining": 0,
+        "online": false,
+        "honors": false,
+        "url": "https://wl11gp.neu.edu/udcprod8/bwckschd.p_disp_detail_sched?term_in=202010&crn_in=10548",
+        "crn": "10548",
+        "meetings": [
+            {
+                "startDate": 18148,
+                "endDate": 18234,
+                "profs": [
+                    "Matthew Francis Petit"
+                ],
+                "where": "Dodge Hall 119",
+                "type": "Class",
+                "times": {
+                    "1": [
+                        {
+                            "start": 28800,
+                            "end": 32700
+                        }
+                    ],
+                    "3": [
+                        {
+                            "start": 28800,
+                            "end": 32700
+                        }
+                    ],
+                    "4": [
+                        {
+                            "start": 28800,
+                            "end": 32700
+                        }
+                    ]
+                },
+                "allProfs": [
+                    "Matthew Francis Petit"
+                ]
+            }
+        ],
+        "lastUpdateTime": 1563906649236,
+        "termId": "202010",
+        "host": "neu.edu",
+        "subject": "ACCT",
+        "classId": "1201"
+    }
+}
+}
