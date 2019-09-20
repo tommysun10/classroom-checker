@@ -1,5 +1,4 @@
-const summer2 = require("./201960.json");
-const summerfull = require("./201950.json");
+const fall = require("./202010.json");
 
 // fall: "10",
 // spring: "30",
@@ -9,7 +8,7 @@ const summerfull = require("./201950.json");
 
 ////////////////////////////////////////////
 // const room = "Snell Library 031";
-const room = "Snell Library 031";
+const room = "Hayden Hall 424";
 ////////////////////////////////////////////
 
 const classes = {};
@@ -42,12 +41,15 @@ function simplifyData(semester) {
 function getClasses() {
   // Gets the classes from the given room
   Object.keys(classes).forEach(function(key) {
-    classes[key]["meetings"].map(function(obj) {
-      if (obj["where"] === room) {
-        crns.push(classes[key]["crn"]);
-        classTimes[key] = obj;
-      }
-    });
+    let obj = classes[key]["meetings"];
+    if (obj) {
+      obj.map(function(classObj) {
+        if (classObj["where"] === room) {
+          crns.push(classes[key]["crn"]);
+          classTimes[key] = classObj;
+        }
+      });
+    }
   });
 }
 
@@ -73,14 +75,9 @@ function convertToSeconds() {
 }
 
 function doAll() {
-  simplifyData(summer2);
+  simplifyData(fall);
   getClasses();
   getEndTimes();
-
-  simplifyData(summerfull);
-  getClasses();
-  getEndTimes();
-
   convertToSeconds();
 }
 
